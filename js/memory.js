@@ -5,19 +5,42 @@
 
 
 //document.querySelector("#ShowButton").innerHTML = 'Bajs'
+function endGameByTime() {
+    wordsShowing = 0;
+    switchMode();    
+}
+
+function updateTimer() {
+    if (wordsShowing == 0) {
+        var fullGameTime = settingsNumWords*settingsTimePerWord*1000;
+        var currTime = new Date();
+        var timeElem = document.getElementById("gridGameTitleTime")  
+        //console.log(timeElem,timeElem.innerHTML);
+        timeElem.innerHTML = Math.round((fullGameTime - (currTime - startTime))/1000) + ' s';
+    //    console.log(timeElem.innerHtml);
+        window.setTimeout(updateTimer, 100);
+    }
+}
 
 
 function createWordsNew() {
 
     removeGameNew()
+    let timeForGame = settingsNumWords*settingsTimePerWord*1000;
 
     const gridDiv = document.createElement("div");
     gridDiv.setAttribute("id", "gridGame");
+
+    timeDiv = document.createElement("div");
+    timeDiv.setAttribute("id", "gridGameTitleTime");
+    timeDiv.innerHTML =  timeForGame/1000 + ' s';
+    gridDiv.appendChild(timeDiv);
 
     titleDiv = document.createElement("div");
     titleDiv.setAttribute("id", "gridGameTitleText");
     titleDiv.innerHTML = 'Remember these words';
     gridDiv.appendChild(titleDiv);
+
 
     for (var i=0; i<numWords; i++){
         wordDiv = document.createElement("div");
@@ -32,66 +55,36 @@ function createWordsNew() {
     const currentDiv = document.getElementById("endOfGame");
     document.body.insertBefore(gridDiv, currentDiv);
 
+    endGameByTimeId = window.setTimeout(endGameByTime, timeForGame);
+    window.setTimeout(updateTimer, 200);
+
+    var btnElem = document.getElementById("submitBtn")
+    btnElem.innerText = 'Done';
+
 }
 
 
-function createWords() {
-
-
-    var gameElem = document.getElementById("gameTitle")
-    gameElem.innerHTML = 'Remember these words'
-    gameElem.style.fontSize = settingsFontSize + 'px';
-
-    
-    //removeGameNew()
-    //removeGame()
-
-    for (var i=0; i<numWords; i++){
-
-        const newDiv = document.createElement("div");
-        newDiv.setAttribute("class", "memoryText");
-        
-        newDiv.style.color = '#E8A800';
-        
-        // So fix color of title, check numwords error etc
-
-        newDiv.innerHTML = wordList[i];
-        newDiv.style.fontSize = settingsFontSize + 'px';
-        console.log(newDiv.style.fontSize, settingsFontSize);
-        //const newContent = document.createTextNode(wordList[i]);
-        //newContent.style.fontSize = settingsFontSize;
-        //newDiv.appendChild(newContent);
-        const currentDiv = document.getElementById("endOfGame");
-        document.body.insertBefore(newDiv, currentDiv);
-
-    }
-    var btnElem = document.getElementsByClassName("submitBtn")
-    btnElem[0].innerText = 'Done';
-}
 
 
 function removeGameNew() {
+
     var element = document.getElementById("gridGame");
+    console.log(element)
+    
+    if (element) {
     element.remove();
 
-    
-}
-
-function removeGame() {
-
     var element = document.getElementsByClassName("memoryText");
-    var elemLength = element.length 
-    for (var i=0; i<elemLength; i++){
+    if (element.length >0){
         element[0].remove();
     }
-
-    var element = document.getElementsByClassName("answerText");
-    var elemLength = element.length 
-    for (var i=0; i<elemLength; i++){
-        element[0].remove();
+    
+    
     }
-
+    window.clearTimeout(endGameByTimeId);
 }
+
+
 
 
 function obtainGuessNew() {
@@ -102,7 +95,7 @@ function obtainGuessNew() {
     gridDiv.setAttribute("id", "gridGame");
 
     titleDiv = document.createElement("div");
-    titleDiv.setAttribute("id", "gridGameTitleText");
+    titleDiv.setAttribute("id", "gridGameAnswerText");
     titleDiv.innerHTML = 'Which words can you remember?';
     gridDiv.appendChild(titleDiv);
 
@@ -132,48 +125,10 @@ function obtainGuessNew() {
     const currentDiv = document.getElementById("endOfGame");
     document.body.insertBefore(gridDiv, currentDiv);
 
-    var btnElem = document.getElementsByClassName("submitBtn")
-    btnElem[0].innerText = 'Submit';
+    var btnElem = document.getElementById("submitBtn")
+    btnElem.innerText = 'Submit';
 }
 
-function obtainGuess() {
-
-    document.getElementById("gameTitle").innerHTML = 'Which words can you remember?'
-
-    var element = document.getElementsByClassName("memoryText");
-    var elemLength = element.length 
-    removeGameNew()
-    //removeGame()
-
-    for (var i=0; i< elemLength; i++){
-        const newDiv = document.createElement("div");
-        newDiv.setAttribute("class", "answerText");
-        
-        const gameInfo = document.createElement("label");
-        gameInfo.innerHTML = i;
-        gameInfo.style.fontSize = settingsFontSize + 'px';
-        gameInfo.style.color = '#E8A800';
-
-        var answer = document.createElement("input");
-        answer.type = "text";
-        answer.id = 'answer' + i;
-
-        answer.style.fontSize = settingsFontSize + 'px';
-        //answer.style.width = '35%'
-
-        newDiv.append(gameInfo);
-        newDiv.appendChild(answer);
-        const currentDiv = document.getElementById("endOfGame");
-        
-        document.body.insertBefore(newDiv, currentDiv);
-    }
-
-   
-    
-    var btnElem = document.getElementsByClassName("submitBtn")
-    btnElem[0].innerText = 'Submit';
-
-}
 
 
 function checkAnswer(){
@@ -199,7 +154,7 @@ function checkAnswer(){
 
     var resString = '';
     resString = "Score: " + numCorr + ' / ' + numWords + '.';
-    resString = resString + ' Time taken: ' + ((endTime - startTime)/1000) + 's.';
+    resString = resString + ' Time taken: ' + (Math.round((endTime - startTime)/100))/10 + 's.';
     
     const newDiv = document.createElement("div");
     newDiv.setAttribute("class", "memoryText");
@@ -212,18 +167,19 @@ function checkAnswer(){
     const currentDiv = document.getElementById("endOfGame");
     document.body.insertBefore(newDiv, currentDiv);
 
-    var btnElem = document.getElementsByClassName("submitBtn")
-    btnElem[0].innerText = 'Play again';
+    var btnElem = document.getElementById("submitBtn")
+    btnElem.innerText = 'Play again';
 }
 
 
 function switchMode(){
     if (wordsShowing == 0) {
         //obtainGuess();
-        obtainGuessNew();
         wordsShowing = 1;
-    } else if (wordsShowing == 1){
         endTime = new Date();
+        obtainGuessNew();
+        
+    } else if (wordsShowing == 1){
         checkAnswer();
         wordsShowing = 2;
     } else {
@@ -332,35 +288,45 @@ function settingsBtn() {
     settingsTimePerWord = settingsDurationElem.value;
     settingsNumWords = settingsNumWordsElem.value;
     settingsFontSize = settingsFontSizeElem.value;
-
+    wordsShowing = 0;
     changeGameScreen('wordGame')
 }
+
+// Main issue is straight from game back to settings
+// Then there is an issue with the updating timer
+
+function goBackToSettings() {
+    window.clearTimeout(endGameByTimeId);
+    wordsShowing = 1;
+    removeGameNew();
+    var elem = document.getElementById("gridBtnWrap");
+    elem.style.display = 'none';
+    changeGameScreen('settings');
+}
+
 
 
 function changeGameScreen(nextScrn){
     if (nextScrn == 'wordGame'){
-        
+        var settingsElem = document.getElementById('settingsScreen');
+        settingsElem.style.display = 'none';
         startTime = new Date();
 
 
         //dropZone.style.display = 'none';
         var settingsElem = document.getElementById('settingsScreen');
         settingsElem.style.display = 'none';
-        var wrapElem = document.getElementById('wrapper');
-        wrapElem.style.display = 'flex';
+        var wrapElem = document.getElementById('gridBtnWrap');
+        wrapElem.style.display = 'grid';
         //createWords();
         createWordsNew();
     }
     else if (nextScrn == 'settings'){
 
-        
-
         var dropZone = document.getElementById('drop_zone');
         dropZone.style.display = 'none';
-        var settingsElem = document.getElementById('settingsMenu');
+        var settingsElem = document.getElementById('settingsScreen');
         settingsElem.style.display = 'grid';
-        var settingsElem = document.getElementById('settingsTitle');
-        settingsElem.style.display = 'flex';
 
         setSettingsWords();
 
@@ -386,6 +352,7 @@ var wordsShowing = 0;
 var numWords;
 var startTime, endTime;
 var wordList;
+var endGameByTimeId;
 
 var settingsNumWords;
 var settingsTimePerWord;

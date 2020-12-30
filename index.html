@@ -10,8 +10,12 @@
     <div id="gameTitle"></div>
     <div id="endOfGame"></div>
 
-    <div id="wrapper">
+    <!-- <div id="wrapper"> 
         <button class="submitBtn" onclick="switchMode()">Done</button>
+    </div>-->
+    <div id="gridBtnWrap">
+        <div> <button class="gridBtn" onclick="goBackToSettings()"><b>SETTINGS</b></button></div>
+        <div class="inputGrid"> <button id="submitBtn" class="gridBtn" onclick="switchMode()"><b>DONE</b></button></div>
     </div>
 
     <div id="drop_zone">
@@ -24,15 +28,16 @@
         </div>
         <div id='settingsMenu'>
             
-            <div class="settingsText">Number of words</div><div class="settingsVal"><input id="numWordsField" type="number" value='25' min='1' max='50' onchange="setSettingsWords()"> / <span id="numWordsText">maxWords</span></div>
-            <div class="settingsText">Time per word</div><div class="settingsVal"><input id="durationField" type="number" value='10' min = 1 onchange="setSettingsDuration()"> s</div>
-            <div class="settingsText">Fontsize</div><div class="settingsVal"><input id="fontSizeField" type="number" value='18' onchange="setFontSize()" min='5' max='50'> px</div>
+            <div class="settingsText">Number of words:</div><div class="settingsVal"><input id="numWordsField" type="number" value='25' min='1' max='50' onchange="setSettingsWords()"> / <span id="numWordsText">maxWords</span></div>
+            <div class="settingsText">Time per word:</div><div class="settingsVal"><input id="durationField" type="number" value='10' min = 1 onchange="setSettingsDuration()"> s</div>
+            <div class="settingsText">Fontsize:</div><div class="settingsVal"><input id="fontSizeField" type="number" value='18' onchange="setFontSize()" min='5' max='50'> px</div>
+            <div id="settingsWrapper">
+                <button class="settingsBtn" onclick="settingsBtn()"><b>START</b></button>
+            
+            </div>
         </div>
 
-        <div id="settingsWrapper">
-            <button class="settingsBtn" onclick="settingsBtn()">Start</button>
         
-        </div>
         
 
         <div id="settingsExampleHeader">
@@ -47,14 +52,9 @@
 
     </div>
         
-    <div id="gridGame" style="display:none;">
-        <div id="gridGameTitleText"> Which words can you remember?</div>
-        <div> 2</div>
-        <div class="inputGrid"> <input class="gridInputForm"/></div>
-        <div class="wordGrid"> 4</div>
-        <div class="inputGrid"> 5</div>
+    <div id="gridGame"></div>
 
-    </div>
+    
 
     <script src="./js/memory.js"></script>
 
