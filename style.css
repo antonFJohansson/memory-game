@@ -315,6 +315,7 @@ div.settingsText settingsVal {
     border: 2px solid #f6b93b;
     display: inline-block;
     transition: all 0.4s ease 0s;
+    outline: none;
     }
 
     .settingsBtn:hover {
@@ -325,7 +326,7 @@ div.settingsText settingsVal {
     }
 
     .settingsBtn:focus {
-        color: #ffffff;
+        color: #f6b93b;
         background: #2D3240;
         border-color: #2D3240;
         transition: all 0.4s ease 0s;
@@ -342,6 +343,7 @@ div.settingsText settingsVal {
     border: 2px solid #f6b93b;
     display: inline-block;
     transition: all 0.4s ease 0s;
+    outline:none;
     }
 
     .gridBtn:hover {
@@ -351,9 +353,42 @@ div.settingsText settingsVal {
         transition: all 0.4s ease 0s;
     }
 
-    .gridBtn:focus {
-        color: #ffffff;
+    .gridBtn:active {
+        color: #f6b93b;
         background: #2D3240;
         border-color: #2D3240;
         transition: all 0.4s ease 0s;
     }
+
+  
+
+
+
+    .dropHereAnimForward {
+        animation: opaqForward 0.5s forwards;
+    }
+
+    @keyframes opaqForward {
+        0% {
+          opacity: 100%;
+        }
+        
+        100% {
+            opacity: 0%;
+        }
+      }
+
+      .dropDropAnim {
+        outline: 0px solid;
+        animation: createOutline 1s forwards;
+
+      }
+
+      @keyframes createOutline {
+          0% {
+              outline-width: 0px;
+          }
+          100% {
+              outline-width: 10px;
+          }
+      }
