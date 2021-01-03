@@ -40,6 +40,7 @@ this.wordGameHandleFileSelect = function(evt) {
     
     reader.readAsText(files[0]);
     reader.onload = function() {
+        console.log('Bajs')
         // And then we can load the game here?
         // Or the setting maybe?
         storeText =reader.result.split('\n');
@@ -69,6 +70,7 @@ this.wordGameHandleFileSelect = function(evt) {
 }
 
 this.wordGameHandleDragOver = function(evt) {
+    console.log('Hejsan enter')
     var dropZone = document.getElementById('drop_zone');
     dropZone.style.backgroundColor = '#393c44';
     evt.stopPropagation();
@@ -86,6 +88,10 @@ this.wordGameHandleDragOver = function(evt) {
 
 this.wordGameHandleDragLeave = function(evt) {
     var dropZone = document.getElementById('drop_zone');
+    let rect = dropZone.getBoundingClientRect();
+    console.log('Hejsan')
+    
+        
     dropZone.style.backgroundColor = '#2D3240';
 
     var dropTextHere = document.getElementById('dropHereId');
@@ -93,6 +99,7 @@ this.wordGameHandleDragLeave = function(evt) {
 
     var dropTextDrop = document.getElementById('dropDropId');
     dropTextDrop.classList.remove('dropDropAnim');
+
 }
 
 
@@ -115,6 +122,8 @@ function memorizeWordsGame() {
     this.storeText;
     
     this.shuffledIds = [];
+
+    this.maxWords = 500;
     
     // Only for debugging
    // this.numWords = 3;
@@ -185,7 +194,7 @@ function memorizeWordsGame() {
         
             var btnElem = document.getElementById("submitBtn")
             btnElem.innerText = 'Done';
-        
+            window.scrollTo(0,0);
     }
 
     this.removeGame = function() {
@@ -245,6 +254,7 @@ function memorizeWordsGame() {
         
             var btnElem = document.getElementById("submitBtn")
             btnElem.innerText = 'Submit';
+            window.scrollTo(0,0);
     }
 
     this.checkAnswer = function() {
@@ -287,6 +297,7 @@ function memorizeWordsGame() {
         
             var btnElem = document.getElementById("submitBtn")
             btnElem.innerText = 'Play again';
+            window.scrollTo(0,document.body.scrollHeight);
     }
 
         // Switch between memorizing words, inputting them and verifying answers
@@ -320,13 +331,14 @@ function memorizeWordsGame() {
     
     this.setSettingsWords = function() {
         var settingsNumWordsElem = document.getElementById('numWordsField');
-        settingsNumWordsElem.max = this.numWords;
-        
+        //settingsNumWordsElem.max = this.numWords;
+        settingsNumWordsElem.max = Math.min(this.numWords, this.maxWords);
     
         var settingsNumWordsText = document.getElementById('numWordsText');
-        settingsNumWordsText.innerHTML = this.numWords;
+        settingsNumWordsText.innerHTML = Math.min(this.numWords,this.maxWords);
+        //settingsNumWordsText.innerHTML = 500;
         
-        this.settingsNumWords = Math.min(settingsNumWordsElem.value, this.numWords);
+        this.settingsNumWords = Math.min(settingsNumWordsElem.value, settingsNumWordsElem.max);
         this.settingsNumWords = Math.max(this.settingsNumWords, 1);
         settingsNumWordsElem.value = this.settingsNumWords;
         
@@ -390,6 +402,7 @@ function memorizeWordsGame() {
     
         } else if (nextScrn == 'dropWordFile') {
             var dropZone = document.getElementById('drop_zone');
+            dropZone.style.display = 'flex';
             dropZone.addEventListener('dragover', wordGameHandleDragOver, false);
             dropZone.addEventListener('dragleave', wordGameHandleDragLeave, false);
             dropZone.addEventListener('drop', wordGameHandleFileSelect, false);
@@ -400,23 +413,8 @@ function memorizeWordsGame() {
 }
 
 myGame = new memorizeWordsGame();
-myGame.changeGameScreen('dropWordFile')
-//changeGameScreen('dropWordFile')
-//changeGameScreen('settings')
+myGame.changeGameScreen('dropWordFile');
 
-
-/* 
-var wordsShowing = 0;
-var numWords = 2;
-var startTime, endTime;
-
-startTime = new Date();
-
-createWords() */
-
-
-
-
-
-
+// So I should just make the other game here
+// And then enable us to switch between them
 
