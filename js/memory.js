@@ -25,94 +25,22 @@ function shuffle(array) {
     return array;
   }
 
-
-this.wordGameHandleFileSelect = function(evt) {
-    var dropZone = document.getElementById('drop_zone');
-    evt.stopPropagation();
-    evt.preventDefault();
-
-    var files = evt.dataTransfer.files; // FileList object.
-
-    // files is a FileList of File objects. List some properties.
-    // The issue is that the this of this one takes over I think?
-    let reader = new FileReader();
-
-    
-    reader.readAsText(files[0]);
-    reader.onload = function() {
-        console.log('Bajs')
-        // And then we can load the game here?
-        // Or the setting maybe?
-        storeText =reader.result.split('\n');
-
-        // Clean up some whitespace
-        for (var u=0; u<storeText.length; u++)
-        {
-            storeText[u] = storeText[u].trim();
-        }
-
-        
-
-        //wordList = storeText;
-        //numWords = storeText.length;
-
-
-        myGame.wordList = storeText;
-        myGame.numWords = storeText.length;
-        myGame.changeGameScreen('settings')
-        //console.log(this.changeGameScreen);
-        //console.log(this);
-        //this.changeGameScreen('settings')
-
-    };
-
-
-}
-
-this.wordGameHandleDragOver = function(evt) {
-    console.log('Hejsan enter')
-    var dropZone = document.getElementById('drop_zone');
-    dropZone.style.backgroundColor = '#393c44';
-    evt.stopPropagation();
-    evt.preventDefault();
-    evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
-
-    var dropTextHere = document.getElementById('dropHereId');
-    dropTextHere.classList.add('dropHereAnimForward');
-
-
-    var dropTextDrop = document.getElementById('dropDropId');
-    dropTextDrop.classList.add('dropDropAnim');
-
-}
-
-this.wordGameHandleDragLeave = function(evt) {
-    var dropZone = document.getElementById('drop_zone');
-    let rect = dropZone.getBoundingClientRect();
-    console.log('Hejsan')
-    
-        
-    dropZone.style.backgroundColor = '#2D3240';
-
-    var dropTextHere = document.getElementById('dropHereId');
-    dropTextHere.classList.remove('dropHereAnimForward');
-
-    var dropTextDrop = document.getElementById('dropDropId');
-    dropTextDrop.classList.remove('dropDropAnim');
-
-}
-
-
-
+  // Drop file here
 
 function memorizeWordsGame() {
+
+    
+    var wordDiv = document.getElementById('wordGame');
+    wordDiv.style.display = 'inline'
+
     
     this.wordsShowing = 0;
 
-    this.numWords;
+    this.numWords = allWords.length;
+    this.wordList = allWords;
+    
     this.startTime;
     this.endTime;
-    this.wordList;
     this.endGameByTimeId;
     
     this.settingsNumWords;
@@ -392,29 +320,34 @@ function memorizeWordsGame() {
         }
         else if (nextScrn == 'settings'){
             // Remove and add div elements
-            var dropZone = document.getElementById('drop_zone');
-            dropZone.style.display = 'none';
+            //var dropZone = document.getElementById('drop_zone');
+            //dropZone.style.display = 'none';
             var settingsElem = document.getElementById('settingsScreen');
             settingsElem.style.display = 'grid';
     
             this.setSettingsWords();
     
     
-        } else if (nextScrn == 'dropWordFile') {
+        } /* else if (nextScrn == 'dropWordFile') {
             var dropZone = document.getElementById('drop_zone');
             dropZone.style.display = 'flex';
             dropZone.addEventListener('dragover', wordGameHandleDragOver, false);
             dropZone.addEventListener('dragleave', wordGameHandleDragLeave, false);
             dropZone.addEventListener('drop', wordGameHandleFileSelect, false);
-        }
+        } */
     }
             
 
 }
 
-myGame = new memorizeWordsGame();
-myGame.changeGameScreen('dropWordFile');
+
+//console.log(allWords)
+
+//myGame = new memorizeWordsGame();
+//myGame.changeGameScreen('settings');
 
 // So I should just make the other game here
 // And then enable us to switch between them
+
+
 

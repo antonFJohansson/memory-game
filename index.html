@@ -7,56 +7,61 @@
 </head>
 <body>
 
-    <div id="gameTitle"></div>
-    <div id="endOfGame"></div>
 
-    <!-- <div id="wrapper"> 
-        <button class="submitBtn" onclick="switchMode()">Done</button>
-    </div>-->
-    <div id="gridBtnWrap">
-        <div> <button class="gridBtn" onclick="myGame.goBackToSettings()"><b>SETTINGS</b></button></div>
-        <div class="inputGrid"> <button id="submitBtn" class="gridBtn" onclick="myGame.switchWordGameMode()"><b>DONE</b></button></div>
-    </div>
 
-    <div id="drop_zone">
-        <p><span id="dropDropId">Drop the textfile</span> <span id="dropHereId">here</span></p>
-    </div>
+    <div id="wordGame">
+        <div id="gameTitle"></div>
+        <div id="endOfGame"></div>
 
-    <div id='settingsScreen'>
-        <div id="settingsTitle">
-            <h1 class="settingsH1">Game Settings</h1>
+        <!-- <div id="wrapper"> 
+            <button class="submitBtn" onclick="switchMode()">Done</button>
+        </div>-->
+        <div id="gridBtnWrap">
+            <div> <button class="gridBtn" onclick="myGame.goBackToSettings()"><b>SETTINGS</b></button></div>
+            <div class="inputGrid"> <button id="submitBtn" class="gridBtn" onclick="myGame.switchWordGameMode()"><b>DONE</b></button></div>
         </div>
-        <div id='settingsMenu'>
-            
-            <div class="settingsText">Number of words:</div><div class="settingsVal"><input id="numWordsField" type="number" value='25' min='1' max='50' onchange="myGame.setSettingsWords()"> / <span id="numWordsText">maxWords</span></div>
-            <div class="settingsText">Time per word:</div><div class="settingsVal"><input id="durationField" type="number" value='10' min = 1 onchange="myGame.setSettingsDuration()"> s</div>
-            <div class="settingsText">Fontsize:</div><div class="settingsVal"><input id="fontSizeField" type="number" value='18' onchange="myGame.setFontSize()" min='5' max='50'> px</div>
-            <div id="settingsWrapper">
-                <button class="settingsBtn" onclick="myGame.settingsBtn()"><b>START</b></button>
-            
+
+
+        <div id='settingsScreen'>
+            <div id="settingsTitle">
+                <h1 class="settingsH1">Game Settings</h1>
             </div>
+            <div id='settingsMenu'>
+                
+                <div class="settingsText">Number of words:</div><div class="settingsVal"><input id="numWordsField" type="number" value='25' min='1' max='50' onchange="myGame.setSettingsWords()"> / <span id="numWordsText">maxWords</span></div>
+                <div class="settingsText">Time per word:</div><div class="settingsVal"><input id="durationField" type="number" value='10' min = 1 onchange="myGame.setSettingsDuration()"> s</div>
+                <div class="settingsText">Fontsize:</div><div class="settingsVal"><input id="fontSizeField" type="number" value='18' onchange="myGame.setFontSize()" min='5' max='50'> px</div>
+                <div id="settingsWrapper">
+                    <button class="settingsBtn" onclick="myGame.settingsBtn()"><b>START</b></button>
+                
+                </div>
+            </div>
+
+            <div id="settingsExampleHeader">
+                <p id="settingsExampleText">
+                    <b>Font-size example</b>
+                </p>
+                
+            </div>
+
         </div>
-
-        
-        
-
-        <div id="settingsExampleHeader">
-            <p id="settingsExampleText">
-                <b>Font-size example</b>
-            </p>
             
-        </div>
-
-        
-        
-
+        <div id="gridGame"></div>
     </div>
-        
-    <div id="gridGame"></div>
 
+    <div id="btnGridWrap">
+        <div id="levelTitle">Level 1</div>
+        <div id="buttonTitle">Remember the pattern</div>
+        <div id="buttonGame">
+        </div>
+        <div id="btnGameWrapButtons"><button class="btnGameBtns">Settings</button><button class="btnGameBtns" onclick="restartGame()">Restart</button></div>
+    </div>
     
-
+    
+    
+    <script src="./js/allWords.js"></script>
     <script src="./js/memory.js"></script>
+    <script src="./js/btnMemory.js"></script>
 
 </body>
 </html>
